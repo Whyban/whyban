@@ -80,7 +80,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $totalRoles }}</h3>
 
                 <p>Roles</p>
               </div>
@@ -95,12 +95,12 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $totalDesignations }}</h3>
 
                 <p>Designations</p>
               </div>
               <div class="icon">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-address-card"></i>
               </div>
               <a href="designations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -159,24 +159,12 @@
               <div class="card-header">
                 <h3 class="card-title">Pending Tasks</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="height: 300px;">
                 <table class="table table-head-fixed text-nowrap">
                   <thead>
                     <tr>
-                      <th>No.</th>
                       <th>Projects</th>
                       <th>Task</th>
                       <th>Duration</th>
@@ -188,7 +176,6 @@
                   <tbody>
                   @foreach($projects->where('status', 'On Hold') as $project)
             <tr>
-                <td>{{ $project->id }}</td>
                 <td>{{ $project->project_name }}</td>
                 <td>{{ $project->project_description }}</td>
                 <td>{{ $project->estimated_duration }}</td>

@@ -196,6 +196,7 @@
                 <input type="text" class="form-control" name="phone"  id="phone"  placeholder="Enter Your Phone">
               </div>
               <div class="form-group">
+                <label>Select Category</label>
                 <select name="designations" class="form-control" id="designationsId">
                     @foreach ($data as $row)
                      <option value="{{ $row->name }}">{{ $row->name }}</option>
@@ -224,7 +225,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">New Team Members</h4>
+            <h4 class="modal-title">Delete Team Members</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -274,39 +275,39 @@
 
 {{-- ADD AJAX --}}
 <script>
-$(document).ready(function(){
-$('#addTeamMembersForm').submit('click', function(e){
-  e.preventDefault();
-  let formData = $(this).serialize();
-  $.ajax({
-      url: '{{ route("addTeamMembers") }}',
-      data: formData,
-      contentType: false,
-      processData: false,
-      beforeSend: function(){
-          $('.addButton').prop('disabled', true);
-      },
-      complete: function(){
-          $('.addButton').prop('disabled', false);
-      },
-      success: function(data){
-          if(data.success == true){
-              $('#modal-add-new').modal('hide');
-              printSuccessMsg(data.msg);
-              var reloadInterval = 1000;
-              function reloadPage(){
-                  location.reload(true);
-              }
-              var intervalId = setInterval(reloadPage, reloadInterval);
-          }else if(data.success == false){
-              printErrorMsg(data.msg);
-          }else{
-              printValidationErrorMsg(data.msg);
-          }
-      }
- });
- return false;
-});
+    $(document).ready(function(){
+         $('#addTeamMembersForm').submit('click', function(e){
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url: '{{ route("addTeamMembers") }}',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function(){
+                    $('.addButton').prop('disabled', true);
+                },
+                complete: function(){
+                    $('.addButton').prop('disabled', false);
+                },
+                success: function(data){
+                    if(data.success == true){
+                        $('#modal-add-new').modal('hide');
+                        printSuccessMsg(data.msg);
+                        var reloadInterval = 1000;
+                        function reloadPage(){
+                            location.reload(true);
+                        }
+                        var intervalId = setInterval(reloadPage, reloadInterval);
+                    }else if(data.success == false){
+                        printErrorMsg(data.msg);
+                    }else{
+                        printValidationErrorMsg(data.msg);
+                    }
+                }
+           });
+           return false;
+        });
 // DELETE AJAX
 $('.deleteBtn').on('click', function(){
   var team_members_id = $(this).attr('data-id');
@@ -395,11 +396,11 @@ $('.editBtn').on('click', function(){
 });
 
 function printValidationErrorMsg(msg){
-      $.each(msg, function(field_name,error){
-          console.log(field_name,error);
-          $(document).find('#'+field_name+'_error').text(error);
-      });
-  }
+                $.each(msg, function(field_name,error){
+                    console.log(field_name,error);
+                    $(document).find('#'+field_name+'_error').text(error);
+                });
+            }
 
 });
 function printErrorMsg(msg){

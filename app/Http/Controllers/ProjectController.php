@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Roles;
+use App\Models\Designations;
 use RealRashid\SweetAlert\Facades\Alert;
 use DB;
 use Illuminate\Support\Facades\Validator;
@@ -14,11 +16,15 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
+        $roles = Roles::all();
+        $designations = Designations::all();
+        $totalRoles = $this->getTotalRoles();
+        $totalDesignations = $this->getTotalDesignations();
         $totalProjects = $this->getTotalProjects(); // Call the function to get total projects
         $totalPendings = $this->getTotalPendings();
         $totalSuccess = $this->getTotalSuccess();
 
-        return view('dashboard', compact('projects', 'totalProjects', 'totalPendings', 'totalSuccess'));
+        return view('dashboard', compact('projects', 'totalProjects', 'totalPendings', 'totalSuccess', 'totalRoles', 'totalDesignations'));
     }
 
     public function create(Request $request)
@@ -102,5 +108,13 @@ class ProjectController extends Controller
     protected function getTotalSuccess()
     {
         return Project::where('status', 'Success')->count();
+    }
+    protected function getTotalRoles()
+    {
+        return Roles::count();
+    }
+    protected function getTotalDesignations()
+    {
+        return Designations::count();
     }
 }

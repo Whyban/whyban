@@ -99,9 +99,9 @@
                       <th style="width: 20%">
                           Project Name
                       </th>
-                      <th style="width: 30%">
+                      {{-- <th style="width: 30%">
                           Team Members
-                      </th>
+                      </th> --}}
                       <th>
                           Project Progress
                       </th>
@@ -124,7 +124,7 @@
                     {{ $project->created_at->format('F d, Y') }}
                 </small>
                 </td>
-                <td>
+                {{-- <td>
                           <ul class="list-inline">
                               <li class="list-inline-item">
                                   <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
@@ -139,7 +139,7 @@
                                   <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
                               </li>
                           </ul>
-                      </td>
+                      </td> --}}
                       <td class="project_progress" data-progress="{{ $project->project_progress }}">
                     @php
                         $progress = $project->project_progress;
@@ -174,11 +174,11 @@
                     @endif
                 </td>
                 <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="#">
+                          {{-- <a class="btn btn-primary btn-sm" href="#">
                               <i class="fas fa-folder">
                               </i>
                               View
-                          </a>
+                          </a> --}}
                           <a class="btn btn-info btn-sm edit-project" data-toggle="modal" data-target="#editProjectModal" data-project='@json($project)'>
                         <i class="fas fa-pencil-alt"></i>
                              Edit

@@ -74,16 +74,10 @@
                         <x-dropdown-link :href="route('project-add')">
                             {{ __('Create Project') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('project-edit')">
-                            {{ __('Project Edit') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('project-detail')">
-                            {{ __('Project Details') }}
-                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>
-           
+
                 </div>
             </div>
 

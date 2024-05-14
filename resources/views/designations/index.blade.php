@@ -186,8 +186,12 @@
                         <input type="text" class="form-control" name="name"  id="name"  placeholder="Enter Your Name">
                       </div>
                       <div class="form-group">
-                        <label>Category</label>
-                        <input type="text" class="form-control" name="category"  id="category">
+                        <label>Select Category</label>
+                        <select name="category" class="form-control" id="categoryId">
+                            @foreach ($data as $row)
+                             <option value="{{ $row->name }}">{{ $row->name }}</option>
+                            @endforeach
+                            </select>
                       </div>
                       <div class="form-group">
                         <label>Description</label>
