@@ -158,7 +158,7 @@
           </div>
         <div class="modal-footer justify-content-between">
           <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-primary addButton"  value = "Add New Record">
+          <input type="submit" class="btn btn-primary addBTN"  value = "Add New Record">
         </div>
       </form>
       </div>
@@ -285,10 +285,10 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function(){
-                    $('.addButton').prop('disabled', true);
+                    $('.addBTN').prop('disabled', true);
                 },
                 complete: function(){
-                    $('.addButton').prop('disabled', false);
+                    $('.addBTN').prop('disabled', false);
                 },
                 success: function(data){
                     if(data.success == true){

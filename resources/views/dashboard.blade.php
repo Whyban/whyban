@@ -170,7 +170,7 @@
                       <th>Duration</th>
                       <th>Status</th>
                       <th>Date</th>
-                      <th>Manage</th>
+                      <th style="position: static;">Manage</th>
                     </tr>
                   </thead>
                   <tbody>
