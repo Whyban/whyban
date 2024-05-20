@@ -222,7 +222,7 @@
                     </div>
                     <div class="modal-body">
 
-                        Do you really want to delete <p class="designations_name"></p> ?
+                        Do you really want to delete this Designation?
 
                     <div class="modal-footer justify-content-between">
                       <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -362,7 +362,7 @@
                         }
                         var intervalId = setInterval(reloadPage, reloadInterval);
                     }else if(data.success == false){
-                        printErrorMsg(data.msg);
+                        printErrorMsg(data.msg);    
                     }else{
                         printValidationErrorMsg(data.msg);
                     }

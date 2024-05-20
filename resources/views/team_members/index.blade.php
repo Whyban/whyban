@@ -12,6 +12,8 @@
         </h2>
     </x-slot>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -83,7 +85,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Designation</th>
+                            <th>Designations</th>
                             <th>Status</th>
                             <th>Date</th>
                             <th>Action</th>
@@ -97,7 +99,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone }}</td>
-                                    <td>{{ $item->designation }}</td>
+                                    <td>{{ $item->category }}</td>
                                     <td>
                                         @if ($item->is_active)
                                         Active
@@ -106,7 +108,7 @@
                                     @endif
                                     </td>
                                     <td>{{ $item->updated_at }}</td>
-                                    <td><button class="btn btn-primary btn-sm editBtn" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-phone="{{ $item->phone }}" data-designation="{{ $item->designation }}" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                                    <td><button class="btn btn-primary btn-sm editBtn" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-phone="{{ $item->phone }}" data-category="{{ $item->category }}" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i>Edit</button></td>
                                     <td><button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i>Delete</button></td>
                                 </tr>
                             @endforeach
@@ -125,13 +127,13 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">New Team Members</h4>
+          <h4 class="modal-title">New Designations</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form id="addTeamMembersForm">
+          <form id="addTeam_MembersForm">
           <div class="form-group">
             <label>Name</label>
             <input type="text" class="form-control" name="name"  id=""  placeholder="Enter Your Name">
@@ -158,7 +160,7 @@
           </div>
         <div class="modal-footer justify-content-between">
           <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-primary addBTN"  value = "Add New Record">
+          <input type="submit" class="btn btn-primary addButton"  value = "Add New Record">
         </div>
       </form>
       </div>
@@ -180,7 +182,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="editTeamMembersForm">
+            <form id="editTeam_MembersForm">
               @csrf
               <input type="hidden" id="team_members_id" name="team_members_id">
               <div class="form-group">
@@ -232,7 +234,7 @@
           </div>
           <div class="modal-body">
 
-              Do you really want to delete <p class="team_members_name"></p> ?
+              Do you really want to delete this Team Members?
 
           <div class="modal-footer justify-content-between">
             <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -276,19 +278,19 @@
 {{-- ADD AJAX --}}
 <script>
     $(document).ready(function(){
-         $('#addTeamMembersForm').submit('click', function(e){
+         $('#addTeam_MembersForm').submit('click', function(e){
             e.preventDefault();
             let formData = $(this).serialize();
             $.ajax({
-                url: '{{ route("addTeamMembers") }}',
+                url: '{{ route("addTeam_Members") }}',
                 data: formData,
                 contentType: false,
                 processData: false,
                 beforeSend: function(){
-                    $('.addBTN').prop('disabled', true);
+                    $('.addButton').prop('disabled', true);
                 },
                 complete: function(){
-                    $('.addBTN').prop('disabled', false);
+                    $('.addButton').prop('disabled', false);
                 },
                 success: function(data){
                     if(data.success == true){
@@ -316,7 +318,7 @@ $('.deleteBtn').on('click', function(){
   $('.team_members_name').html(team_members_name);
 
   $('.deleteBTN').on('click', function(){
-  var url = "{{ route('deleteTeamMembers','team_members_id') }}";
+  var url = "{{ route('deleteTeam_Members','team_members_id') }}";
   url = url.replace('team_members_id',team_members_id);
 
   // console.log(url);
@@ -354,70 +356,71 @@ $('.editBtn').on('click', function(){
   var name = $(this).attr('data-name');
   var email = $(this).attr('data-email');
   var phone = $(this).attr('data-phone');
-  var designation = $(this).attr('data-designation');
+  var designations = $(this).attr('data-designations');
 
   $('#name').val(name);
   $('#email').val(email);
   $('#phone').val(phone)
-  $('#designation').val(designation)
+  $('#designations').val(designations)
   $('#team_members_id').val(team_members_id);
 
-  // EDIT SUBMIT
- $('#editTeamMembersForm').submit('click', function(e){
-  e.preventDefault();
-  let formData = $(this).serialize();
-  $.ajax({
-      url: '{{ route("editTeamMembers") }}',
-      data: formData,
-      contentType: false,
-      processData: false,
-      beforeSend: function(){
-          $('.editButton').prop('disabled', true);
-      },
-      complete: function(){
-          $('.editButton').prop('disabled', false);
-      },
-      success: function(data){
-          if(data.success == true){
-              $('#editModal').modal('hide');
-              printSuccessMsg(data.msg);
-              var reloadInterval = 1000;
-              function reloadPage(){
-                  location.reload(true);
-              }
-              var intervalId = setInterval(reloadPage, reloadInterval);
-          }else if(data.success == false){
-              printErrorMsg(data.msg);
-          }else{
-              printValidationErrorMsg(data.msg);
-          }
-      }
- });
-});
+// EDIT SUBMIT
+$('#editTeam_MembersForm').submit('click', function(e){
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url: '{{ route("editTeam_Members") }}',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function(){
+                    $('.editButton').prop('disabled', true);
+                },
+                complete: function(){
+                    $('.editButton').prop('disabled', false);
+                },
+                success: function(data){
+                    if(data.success == true){
+                        $('#editModal').modal('hide');
+                        printSuccessMsg(data.msg);
+                        var reloadInterval = 1000;
+                        function reloadPage(){
+                            location.reload(true);
+                        }
+                        var intervalId = setInterval(reloadPage, reloadInterval);
+                    }else if(data.success == false){
+                        printErrorMsg(data.msg);
+                    }else{
+                        printValidationErrorMsg(data.msg);
+                    }
+                }
+           });
+        });
 
-function printValidationErrorMsg(msg){
+        function printValidationErrorMsg(msg){
                 $.each(msg, function(field_name,error){
                     console.log(field_name,error);
                     $(document).find('#'+field_name+'_error').text(error);
                 });
             }
 
-});
-function printErrorMsg(msg){
-      $('#alert-danger').html('');
-      $('#alert-danger').css('display','block');
-      $('#alert-danger').append(''+msg+'');
-  }
-  function printSuccessMsg(msg){
-      $('#alert-success').html('');
-      $('#alert-success').css('display','block');
-      $('#alert-success').append(''+msg+'');
-      document.getElementById('addTeamMembersForm').reset();
-  }
+        });
+
+        function printErrorMsg(msg){
+                $('#alert-danger').html('');
+                $('#alert-danger').css('display','block');
+                $('#alert-danger').append(''+msg+'');
+            }
+            function printSuccessMsg(msg){
+                $('#alert-success').html('');
+                $('#alert-success').css('display','block');
+                $('#alert-success').append(''+msg+'');
+                document.getElementById('addTeam_MembersForm').reset();
+            }
 
 
 
-});
+    });
 </script>
 
 <!-- ./wrapper -->

@@ -113,10 +113,12 @@
                   </tr>
               </thead>
               <tbody>
+                    @if (count($projects) > 0)
+
                   @foreach($projects as $project)
                   <tr class="project-row" data-id="{{ $project->id }}">
-
-                <td>{{ $project->id }}</td>
+                <td>{{ $loop->iteration }}</td>
+                {{-- <td>{{ $project->id }}</td> --}}
                 <td>
                     {{ $project->project_name }}
                     <br />
@@ -192,6 +194,11 @@
 
             </tr>
             @endforeach
+            @else
+                <tr>
+                    <td colspan="4">No Data Found!</td>
+                </tr>
+            @endif
 
 
               </tbody>
@@ -225,21 +232,21 @@
                   <!-- Project Name Field -->
                   <div class="form-group">
                     <label for="project_name">Project Name</label>
-                    <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->project_name }}">
+                    <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $projects }}">
                 </div>
                 <!-- Status Field -->
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="status">
-                        <option value="On Hold" {{ $project->status == 'On Hold' ? 'selected' : '' }}>On Hold</option>
-                        <option value="Cancelled" {{ $project->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
-                        <option value="Success" {{ $project->status == 'Success' ? 'selected' : '' }}>Success</option>
+                        <option value="On Hold" {{ $projects == 'On Hold' ? 'selected' : '' }}>On Hold</option>
+                        <option value="Cancelled" {{ $projects == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+                        <option value="Success" {{ $projects == 'Success' ? 'selected' : '' }}>Success</option>
                     </select>
                 </div>
                 <!-- Project Progress Field -->
                 <div class="form-group">
                     <label for="project_progress">Project Progress (%)</label>
-                    <input type="number" class="form-control" id="project_progress" name="project_progress" value="{{ $project->project_progress }}">
+                    <input type="number" class="form-control" id="project_progress" name="project_progress" value="{{ $projects }}">
                 </div>
               </div>
               <div class="modal-footer">

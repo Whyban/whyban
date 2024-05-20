@@ -110,7 +110,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $totalTeam_Members }}</h3>
 
                 <p>Team Members</p>
               </div>

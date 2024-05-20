@@ -224,7 +224,7 @@
                     </div>
                     <div class="modal-body">
 
-                        Do you really want to delete <p class="roles_name"></p> ?
+                        Do you really want to delete this Role?
 
                     <div class="modal-footer justify-content-between">
                       <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>

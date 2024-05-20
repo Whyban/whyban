@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Designations;
 use App\Models\Team_Members;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Roles;
 
 class Team_MembersController extends Controller
 {
     public function index()
     {
         $team_members = Team_Members::all();
-        $data = Roles::all();
+        $data = Designations::all();
         return view('team_members.index', compact('team_members'), ['data'=>$data]);
     }
 
-    public function addTeamMembers(Request $request){
+    public function addTeam_Members(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
-            'designation' => 'required',
+            'category' => 'required',
             'is_active' => 'sometimes'
         ]);
 
@@ -29,15 +29,15 @@ class Team_MembersController extends Controller
             return response()->json(['msg' => $validator->errors()->toArray()]);
         }else{
             try {
-                $addTeamMembers = new Team_Members;
-                $addTeamMembers->name = $request->name;
-                $addTeamMembers->email = $request->email;
-                $addTeamMembers->phone = $request->phone;
-                $addTeamMembers->designation = $request->designation;
-                $addTeamMembers->is_active = $request->is_active == true ? 1:0;
-                $addTeamMembers->save();
+                $addTeam_Members = new Team_Members;
+                $addTeam_Members->name = $request->name;
+                $addTeam_Members->email = $request->email;
+                $addTeam_Members->phone = $request->phone;
+                $addTeam_Members->category = $request->category;
+                $addTeam_Members->is_active = $request->is_active == true ? 1:0;
+                $addTeam_Members->save();
 
-                return response()->json(['success' => true, 'msg' =>'Team Members Updated Successfully']);
+                return response()->json(['success' => true, 'msg' =>'Team Members Created Successfully']);
 
 
             } catch (\Exception $e) {
@@ -48,7 +48,7 @@ class Team_MembersController extends Controller
     }
 
     // DELETE FUNCTIONALITY
-    public function deleteTeamMembers($id){
+    public function deleteTeam_Members($id){
         try {
             $delete_team_members = Team_Members::where('id', $id)->delete();
             return response()->json(['success' => true, 'msg' =>'Team Members Deleted Successfully']);
@@ -58,12 +58,12 @@ class Team_MembersController extends Controller
     }
 
     // EDIT FUNCTIONALITY
-    public function editTeamMembers(Request $request){
+    public function editTeam_Members(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
-            'designation' => 'required',
+            'category' => 'required',
             'is_active' => 'sometimes'
         ]);
         if ($validator->fails()) {
@@ -74,7 +74,7 @@ class Team_MembersController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'phone' => $request->phone,
-                    'designation' => $request->designation,
+                    'category' => $request->category,
                     'is_active' => $request->is_active == true ? 1:0
                 ]);
                 return response()->json(['success' => true, 'msg' =>'Team Members Updated Successfully']);

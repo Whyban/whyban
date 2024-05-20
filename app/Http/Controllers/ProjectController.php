@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Roles;
 use App\Models\Designations;
+use App\Models\Team_Members;
 use RealRashid\SweetAlert\Facades\Alert;
 use DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,14 +18,16 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $roles = Roles::all();
+        $team_members = Team_Members::all();
         $designations = Designations::all();
         $totalRoles = $this->getTotalRoles();
+        $totalTeam_Members = $this->getTotalTeam_Members();
         $totalDesignations = $this->getTotalDesignations();
         $totalProjects = $this->getTotalProjects(); // Call the function to get total projects
         $totalPendings = $this->getTotalPendings();
         $totalSuccess = $this->getTotalSuccess();
 
-        return view('dashboard', compact('projects', 'totalProjects', 'totalPendings', 'totalSuccess', 'totalRoles', 'totalDesignations'));
+        return view('dashboard', compact('projects', 'totalProjects', 'totalPendings', 'totalSuccess', 'totalRoles', 'totalDesignations', 'totalTeam_Members'));
     }
 
     public function create(Request $request)
@@ -116,5 +119,10 @@ class ProjectController extends Controller
     protected function getTotalDesignations()
     {
         return Designations::count();
+    }
+
+    protected function getTotalTeam_Members()
+    {
+        return Team_Members::count();
     }
 }

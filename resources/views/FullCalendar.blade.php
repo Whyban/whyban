@@ -19,13 +19,21 @@
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="assets/css/variables.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css' rel='stylesheet'>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Ekko Lightbox -->
@@ -44,7 +52,84 @@
                Calendar
         </div>
         <div class="panel-body" >
-            <div id='calendar'></div>
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+<!-- Event Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Add Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title</label>
+                        <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title">
+                    </div>
+                    <input type="hidden" id="startDate">
+                    <input type="hidden" id="endDate">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveEvent">Save Event</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit/Delete Event Modal -->
+<div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEventModalLabel">Edit/Delete Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editEventForm">
+                    <div class="form-group">
+                        <label for="editEventTitle">Event Title</label>
+                        <input type="text" class="form-control" id="editEventTitle" placeholder="Enter event title">
+                    </div>
+                    <input type="hidden" id="editStartDate">
+                    <input type="hidden" id="editEndDate">
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" id="editEvent">Update Event</button>
+                <button type="button" class="btn btn-danger" id="deleteEvent">Delete Event</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this event?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmDeleteEvent">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
     </div>
 </div>
@@ -125,6 +210,21 @@
 </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@if (Session::has('message'))
+
+<script>
+    toastr.options = {
+        "progressBar" : true,
+        "closeButton" : true,
+    }
+    toastr.success("{{ Session::get('message') }}",'Success!',{timeOut:12000});
+    toastr.info("{{ Sesssion::get('message') }}");
+</script>
+
+@endif
+
 </body>
 <script>
     $(document).ready(function () {
@@ -148,37 +248,110 @@
         selectable: true,
         selectHelper: true,
         select: function (start, end, allDay) {
-            var title = prompt('Event Title:');
-            if (title) {
-                var start = moment(start, 'DD.MM.YYYY').format('YYYY-MM-DD');
-                var end = moment(end, 'DD.MM.YYYY').format('YYYY-MM-DD');
-                $.ajax({
-                    url: "{{ URL::to('createevent') }}",
-                    data: 'title=' + title + '&start=' + start + '&end=' + end +'&_token=' +"{{ csrf_token() }}",
-                    type: "POST",
-                    success: function (data) {
-                        alert("Added Successfully");
-                        $('#calendar').fullCalendar('refetchEvents');
+            // Set start and end dates in the modal form
+            $('#startDate').val(moment(start).format('YYYY-MM-DD'));
+                $('#endDate').val(moment(end).format('YYYY-MM-DD'));
+
+                // Show the modal
+                $('#eventModal').modal('show');
+
+                // Save event when Save button is clicked
+                $('#saveEvent').off('click').on('click', function () {
+                    var title = $('#eventTitle').val();
+                    if (title) {
+                        $.ajax({
+                            url: "{{ URL::to('createevent') }}",
+                            data: 'title=' + title + '&start=' + $('#startDate').val() + '&end=' + $('#endDate').val() + '&_token=' + "{{ csrf_token() }}",
+                            type: "POST",
+                            success: function (data) {
+                                swal("The event has been added!", {
+                                    icon: "success",
+                                }).then((willReload) => {
+                                    if (willReload) {
+                                        location.reload();
+                                    }
+                                });
+                                $('#calendar').fullCalendar('refetchEvents');
+                                $('#eventModal').modal('hide');
+                                $('#eventForm')[0].reset();
+                            }
+                        });
+                    } else {
+                        alert("Event Title is required");
                     }
                 });
-            }
         },
         eventClick: function (event) {
-            var deleteMsg = confirm("Do you really want to delete?");
-            if (deleteMsg) {
-               $.ajax({
-                    type: "POST",
-                    url: "{{ URL::to('deleteevent') }}",
-                    data: "&id=" + event.id+'&_token=' +"{{ csrf_token() }}",
-                    success: function (response) {
-                        if(parseInt(response) > 0) {
-                            $('#calendar').fullCalendar('removeEvents', event.id);
-                            alert("Deleted Successfully");
-                        }
+               // Populate the edit modal with event data
+               $('#editEventTitle').val(event.title);
+                $('#editStartDate').val(moment(event.start).format('YYYY-MM-DD'));
+                $('#editEndDate').val(moment(event.end).format('YYYY-MM-DD'));
+
+                // Show the modal
+                $('#editEventModal').modal('show');
+
+                 // Handle delete event
+                 $('#deleteEvent').on('click', function () {
+                    $('#confirmDeleteModal').modal('show');
+                    $('#editEventModal').modal('hide');
+
+                    // Confirm delete event when Delete button is clicked
+                    $('#confirmDeleteEvent').on('click', function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('deleteevent') }}",
+                            data: {
+                                id: event.id,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function (response) {
+                                swal("Deleted Successfully", {
+                                    icon: "success",
+                                }).then((willReload) => {
+                                    if (willReload) {
+                                        location.reload();
+                                    }
+                                });
+                                if (parseInt(response) > 0) {
+                                    $('#calendar').fullCalendar('removeEvents', event.id);
+
+                                    $('#confirmDeleteModal').modal('hide');
+                                    $('#editEventModal').modal('hide');
+                                }
+                            }
+                        });
+                    });
+                });
+
+                // Edit event when Edit button is clicked
+                $('#editEvent').off('click').on('click', function () {
+                    var title = $('#editEventTitle').val();
+                    var start = $('#editStartDate').val();
+                    var end = $('#editEndDate').val();
+                    if (title) {
+                        $.ajax({
+                            url: "{{ URL::to('updateevent') }}",
+                            data: 'title=' + title + '&start=' + start + '&end=' + end + '&id=' + event.id + '&_token=' + "{{ csrf_token() }}",
+                            type: "POST",
+                            success: function (data) {
+                                swal("Updated Successfully", {
+                                    icon: "success",
+                                }).then((willReload) => {
+                                    if (willReload) {
+                                        location.reload();
+                                    }
+                                });
+                                $('#calendar').fullCalendar('refetchEvents');
+                                $('#editEventModal').modal('hide');
+                            }
+                        });
+                    } else {
+                        swal("Event Title is required", {
+                            icon: "warning",
+                        });
                     }
                 });
             }
-        }
         });
     });
 </script>

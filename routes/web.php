@@ -106,9 +106,9 @@ Route::get('/add/designations', [DesignationsController::class, 'addDesignations
 Route::get('/edit/designations', [DesignationsController::class, 'editDesignations'])->name('editDesignations');
 Route::get('delete/designations/{id}',[DesignationsController::class, 'deleteDesignations'])->name('deleteDesignations');
 
-Route::get('/add/team_members', [Team_MembersController::class, 'addTeamMembers'])->name('addTeamMembers');
-Route::get('/edit/team_members', [Team_MembersController::class, 'editTeamMembers'])->name('editTeamMembers');
-Route::get('delete/team_members/{id}',[Team_MembersController::class, 'deleteTeamMembers'])->name('deleteTeamMembers');
+Route::get('/add/team_members', [Team_MembersController::class, 'addTeam_Members'])->name('addTeam_Members');
+Route::get('/edit/team_members', [Team_MembersController::class, 'editTeam_Members'])->name('editTeam_Members');
+Route::get('delete/team_members/{id}',[Team_MembersController::class, 'deleteTeam_Members'])->name('deleteTeam_Members');
 
 Route::middleware('auth')->group(function () {
     Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
@@ -149,5 +149,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/getevent', [FullCalendarController::class, 'getEvent'])->name('getevent');
     Route::post('/createevent',[FullCalendarController::class, 'createEvent'])->name('createevent');
     Route::post('/deleteevent',[FullCalendarController::class, 'deleteEvent'])->name('deleteevent');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/getevent', [FullCalendarController::class, 'getEvent'])->name('getevent');
+    Route::post('/createevent',[FullCalendarController::class, 'createEvent'])->name('createevent');
+    Route::post('/deleteevent',[FullCalendarController::class, 'deleteEvent'])->name('deleteevent');
+    Route::post('/updateevent',[FullCalendarController::class, 'updateEvent'])->name('updateevent');
 });
 require __DIR__.'/auth.php';
